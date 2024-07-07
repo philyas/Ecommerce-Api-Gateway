@@ -6,10 +6,10 @@ import { HttpService } from '@nestjs/axios';
 export class ApiGatewayService {
   constructor(private httpService: HttpService) {}
 
-  async logIn(username: string, password:string): Promise<any> {
+  async logIn(username: string, password:string, email:string): Promise<any> {
     try {
       const payload = {
-        username, password
+        username, password, email
       }
 
       console.log(payload)
