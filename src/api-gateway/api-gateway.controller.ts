@@ -24,8 +24,9 @@ export class ApiGatewayController {
   @Post('orders/create')
   @UseGuards(AuthGuard('jwt')) 
   async createOrder(@Req() req, @Body() orderPayload: any): Promise<any> {
-    const userId = req.userId 
-    return {message:'Authorized To Create Orders'}
+    const userId = req?.user?.userId 
+    
+    return {message:'Authorized To Create Orders from ' + userId}
     // Forward order creation request to ApiGatewayService
   //  return this.apiGatewayService.createOrder(userId, orderPayload);
   }
