@@ -10,7 +10,6 @@ export class ApiGatewayController {
   @Post('auth/login')
   //  @UseGuards(AuthGuard) // Example of using AuthGuard for authentication
    async logIn(@Req() req, @Body() { username, password, email }: any): Promise<any> {
-
      // Forward order creation request to ApiGatewayService
      return this.apiGatewayService.logIn(username, password, email);
    }
@@ -18,7 +17,6 @@ export class ApiGatewayController {
    @Post('auth/register')
    //  @UseGuards(AuthGuard) // Example of using AuthGuard for authentication
     async register(@Req() req, @Body() { username, password, email }: any): Promise<any> {
- 
       // Forward order creation request to ApiGatewayService
       return this.apiGatewayService.register(username, password, email);
     }
