@@ -1,5 +1,6 @@
 import { Controller, Post, Body, Req, UseGuards } from '@nestjs/common';
 import { ApiGatewayService } from './api-gateway.service';
+import { AuthGuard } from '@nestjs/passport';
 
 
 @Controller('api')
@@ -15,11 +16,11 @@ export class ApiGatewayController {
    }
 
   @Post('orders/create')
- //  @UseGuards(AuthGuard) // Example of using AuthGuard for authentication
+  @UseGuards(AuthGuard('jwt')) 
   async createOrder(@Req() req, @Body() orderPayload: any): Promise<any> {
-    const userId = req.user.id; // Assuming user ID is available in the request
-
+    const userId = req.userId 
+    return {message:'Authorized To Create Orders'}
     // Forward order creation request to ApiGatewayService
-    return this.apiGatewayService.createOrder(userId, orderPayload);
+  //  return this.apiGatewayService.createOrder(userId, orderPayload);
   }
 }

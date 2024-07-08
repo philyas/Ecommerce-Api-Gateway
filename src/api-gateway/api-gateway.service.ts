@@ -28,6 +28,8 @@ export class ApiGatewayService {
 
 
   async createOrder(userId: number, orderPayload: any): Promise<any> {
+      console.log(`Order succeed by ${userId} -> ${orderPayload}`)
+  /*
     try {
       // Forward request to Order Service
       const response = await this.httpService.axiosRef
@@ -37,7 +39,7 @@ export class ApiGatewayService {
     } catch (error) {
       throw new Error(`Failed to create order: ${error.message}`);
     }
-  }
+    */
+  } 
 
-  // Add more methods for other functionalities (e.g., getProduct, updateOrder, etc.)
 }
