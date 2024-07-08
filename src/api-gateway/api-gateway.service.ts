@@ -18,7 +18,21 @@ export class ApiGatewayService {
       const response = await this.httpService.axiosRef
         .post('http://localhost:3001/auth/login', payload, {})
 
-        console.log(response.data)
+      return { payload: response.data}
+    } catch (error) {
+      throw new Error(`Failed to create order: ${error.message}`);
+    }
+  }
+
+  async register(username: string, password:string, email:string): Promise<any> {
+    try {
+      const payload = {
+        username, password, email
+      }
+
+      // Forward request to Authentication Service / register
+      const response = await this.httpService.axiosRef
+        .post('http://localhost:3001/auth/register', payload, {})
 
       return { payload: response.data}
     } catch (error) {
