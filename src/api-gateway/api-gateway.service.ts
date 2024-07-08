@@ -40,20 +40,31 @@ export class ApiGatewayService {
     }
   }
 
+  async getProducts(): Promise<any> {
+    try {
+      // Forward request to Product Service 
+      const response = await this.httpService.axiosRef
+        .get('http://localhost:3002/products')
+
+      return { payload: response.data}
+    } catch (error) {
+      throw new Error(`Failed to fetch products: ${error.message}`);
+    }
+  }
+
 
   async createOrder(userId: number, orderPayload: any): Promise<any> {
-      console.log(`Order succeed by ${userId} -> ${orderPayload}`)
-  /*
+    console.log(orderPayload)
     try {
       // Forward request to Order Service
       const response = await this.httpService.axiosRef
-        .post('http://localhost:3002/orders/create', orderPayload)
+        .post('http://localhost:3002/orders', orderPayload, {})
 
       return response.data
     } catch (error) {
       throw new Error(`Failed to create order: ${error.message}`);
     }
-    */
+    
   } 
 
 }
