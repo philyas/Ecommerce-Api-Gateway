@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { map } from 'rxjs/operators';
 import { HttpService } from '@nestjs/axios';
+import { CreateProductDto } from 'src/product/create-product.dto';
+import * as FormData from 'form-data'
+
 
 @Injectable()
 export class ApiGatewayService {
@@ -11,8 +13,6 @@ export class ApiGatewayService {
       const payload = {
         username, password, email
       }
-
-      console.log(payload)
 
       // Forward request to Order Service
       const response = await this.httpService.axiosRef
@@ -46,6 +46,38 @@ export class ApiGatewayService {
       const response = await this.httpService.axiosRef
         .get('http://localhost:3002/products')
 
+      return { payload: response.data}
+    } catch (error) {
+      throw new Error(`Failed to fetch products: ${error.message}`);
+    }
+  }
+
+
+  async createProduct(createProductDto:CreateProductDto): Promise<any> {
+    try {
+      // Forward request to Product Service 
+      const response = await this.httpService.axiosRef
+        .post('http://localhost:3002/products', createProductDto, {})
+
+      return { payload: response.data}
+    } catch (error) {
+      throw new Error(`Failed to fetch products: ${error.message}`);
+    }
+  }
+
+
+  async uploadFile(file:Express.Multer.File) {
+    const formData = new FormData();
+    formData.append('file', file.buffer, {
+      filename: file.originalname,
+      contentType: file.mimetype,
+    });
+
+    try {
+      // Forward request to Product Service 
+      const response = await this.httpService.axiosRef
+        .post('http://localhost:3003/documents', formData, {})
+        
       return { payload: response.data}
     } catch (error) {
       throw new Error(`Failed to fetch products: ${error.message}`);
